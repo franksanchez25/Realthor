@@ -7,7 +7,7 @@ export const Header = () => {
    <header className=' bg-slate-200 shadow-md'>
         <div className=' flex justify-between flex-wrap items-center max-w-6xl mx-auto p-3'>
             <Link to='/'>
-            <h1 className=' font-bold text-sm sm:text-xl'>
+            <h1 className=' font-bold text-sm sm:text-3xl'>
                 <span className=' text-slate-500'>Real</span>
                 <span className=' text-slate-700'>thor</span>
             </h1>
