@@ -10,7 +10,6 @@ import { Oauth } from '../components/Oauth';
 
 export const SignIn = () => {
  
-const aa = useSelector( (state)=> state);
 
 const { user } = useSelector((state) => ({user: state.persistedReducer.user}));
 
