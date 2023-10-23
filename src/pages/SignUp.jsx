@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useForm } from '../hooks/useForm'
 import axiosClient from '../utils/axiosClient'
+import { Oauth } from '../components/Oauth'
 
 export const SignUp = () => {
 
@@ -72,6 +73,7 @@ export const SignUp = () => {
           <button disabled={loading} type="submit"
           className=' bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-90 disabled:opacity-85'
           >{loading?'Loading...':'Sign Up'}</button>
+          <Oauth/>
         </form>
 
           <div className='flex gap-3 mt-5'> 
