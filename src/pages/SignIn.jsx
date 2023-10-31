@@ -15,9 +15,6 @@ const { user } = useSelector((state) => ({user: state.persistedReducer.user}));
 
 const {loading, error} = user;
 
-
-
-// console.log(aa)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   
@@ -38,14 +35,18 @@ const {loading, error} = user;
      dispatch(signInStart())
       await axiosClient.post('api/auth/signin',{email:email, passwordbody:password}).then((res)=>{
       const {data} = res;
+      console.log(data);
     dispatch(signInSuccess(data))
     });
+    
+
     
     navigate('/');
 
   
     } catch (err) {
-   console.log(err)
+  
+      console.log(err);
       if (err.response.data.error) {
         if (Array.isArray(err.response.data.error.errors)) {
 

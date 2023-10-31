@@ -25,14 +25,12 @@ export const SignUp = () => {
 
     setloading(true);
 
-    console.log({username, password, email});
 
     try {
 
     await axiosClient.post('api/auth/signup',{username:username,passwordbody:password,email:email}).then((res)=>{
       const {data} = res;
   
-      console.log(data);
       setloading(false);
       navigate('/sign-in');
     });
@@ -40,8 +38,6 @@ export const SignUp = () => {
 
   
     } catch (err) {
-
-      console.log(err)
 
       if (err.response.data.error) {
         setloading(false);
@@ -53,8 +49,6 @@ export const SignUp = () => {
         }
    
        }
-
-     console.log(error)
     } 
     
   }
