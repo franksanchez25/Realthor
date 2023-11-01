@@ -15,10 +15,10 @@ const dispatch = useDispatch();
 
             const result = await signInWithPopup(auth,provider);
 
-                const res =  await axiosClient.post('api/auth/google',{username: result.user.displayName, email:result.user.email, avatar: result.user.photoURL}).
+                await axiosClient.post('api/auth/google',{username: result.user.displayName, email:result.user.email, avatar: result.user.photoURL}).
                 then((res)=>{
                 const {data} = res;
-                dispatch(signInSuccess(data))
+                dispatch(signInSuccess(data));
                 Navigate('/');
                 });
 

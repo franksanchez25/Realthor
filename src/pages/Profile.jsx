@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { app } from '../firebase';
 import { useForm } from '../hooks/useForm';
-import { startUserUpdate, updateUserFailure, updateUserSuccess } from '../redux/user/userSlice';
+import { deleteUserFailure, deleteUserSuccess, startDeleteUser, startUserUpdate, updateUserFailure, updateUserSuccess } from '../redux/user/userSlice';
 import axiosClient from '../utils/axiosClient';
 export const Profile = () => {
   const { user } = useSelector((state) => ({user: state.persistedReducer.user}));
@@ -96,6 +96,43 @@ const handleSubmit = async (e)=> {
   }
 
 }
+
+const handleDeleteUser = async (e) => {
+  e.preventDefault();
+
+  try {
+    dispatch(startDeleteUser());
+
+    axiosClient.delete(`api/user/delete/${user?.currentUser.id}`,{withCredentials:true}).then( (res)=> {
+
+      const {data} = res;
+
+        dispatch(deleteUserSuccess(data));
+
+    } )
+
+    
+  } catch (err) {
+
+
+    if (err.response.data.error) {
+        if (Array.isArray(err.response.data.error.errors)) {
+
+         dispatch(deleteUserFailure(err.response.data.error.errors)); 
+
+        } 
+   
+       }else {
+    
+           dispatch(deleteUserFailure([err.response.data])); 
+        
+        }
+    
+  }
+
+
+
+}
   
   return (
     <div className='p-3 max-w-lg mx-auto'>
@@ -144,7 +181,7 @@ const handleSubmit = async (e)=> {
         </form>
 
         <div className=' flex justify-between mt-5'>
-          <span className=' text-red-600 cursor-pointer'>Delete Account</span>
+          <span className=' text-red-600 cursor-pointer' onClick={handleDeleteUser}>Delete Account</span>
           <span className=' text-red-600 cursor-pointer'>Signout</span>
         </div>
           <p>{ error && error.map(err => {
