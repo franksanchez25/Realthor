@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { app } from '../firebase';
 import { useForm } from '../hooks/useForm';
-import { deleteUserFailure, deleteUserSuccess, startDeleteUser, startUserUpdate, updateUserFailure, updateUserSuccess } from '../redux/user/userSlice';
+import { deleteUserFailure, deleteUserSuccess, signInFailure, signOutFailure, signOutSuccess, startDeleteUser, startSignout, startUserUpdate, updateUserFailure, updateUserSuccess } from '../redux/user/userSlice';
 import axiosClient from '../utils/axiosClient';
 export const Profile = () => {
   const { user } = useSelector((state) => ({user: state.persistedReducer.user}));
@@ -123,16 +123,38 @@ const handleDeleteUser = async (e) => {
         } 
    
        }else {
-    
            dispatch(deleteUserFailure([err.response.data])); 
-        
-        }
-    
+        }  
   }
-
-
-
 }
+
+const handleSignout = async (e) => {
+
+      e.preventDefault();
+
+      try {
+
+        dispatch(startSignout());
+      axiosClient.get('api/user/signout').then((res)=>{
+        const {data} = res
+        dispatch(signOutSuccess())
+       
+      })
+      } catch (err) {
+         if (err.response.data.error) {
+        if (Array.isArray(err.response.data.error.errors)) {
+
+         dispatch(signOutFailure(err.response.data.error.errors)); 
+
+        } 
+   
+       }else {
+           dispatch(signOutFailure([err.response.data])); 
+        }
+      }
+
+    }
+
   
   return (
     <div className='p-3 max-w-lg mx-auto'>
@@ -182,7 +204,7 @@ const handleDeleteUser = async (e) => {
 
         <div className=' flex justify-between mt-5'>
           <span className=' text-red-600 cursor-pointer' onClick={handleDeleteUser}>Delete Account</span>
-          <span className=' text-red-600 cursor-pointer'>Signout</span>
+          <span className=' text-red-600 cursor-pointer' onClick={handleSignout}>Signout</span>
         </div>
           <p>{ error && error.map(err => {
                   return <p key={err?.msg} className=' text-red-600 mt-5'>{err?.msg}</p> })  }</p>
