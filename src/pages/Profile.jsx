@@ -5,6 +5,7 @@ import { app } from '../firebase';
 import { useForm } from '../hooks/useForm';
 import { deleteUserFailure, deleteUserSuccess, signInFailure, signOutFailure, signOutSuccess, startDeleteUser, startSignout, startUserUpdate, updateUserFailure, updateUserSuccess } from '../redux/user/userSlice';
 import axiosClient from '../utils/axiosClient';
+import { Link } from 'react-router-dom';
 export const Profile = () => {
   const { user } = useSelector((state) => ({user: state.persistedReducer.user}));
 
@@ -200,7 +201,11 @@ const handleSignout = async (e) => {
 
           <button 
           className=' bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-90 disabled:opacity-85' disabled={loading} type="submmit">{loading?'Updating...':'Update'}</button>
+         <Link to='/create-listing'
+          className=' bg-green-700 text-white rounded-lg text-center p-3 uppercase hover:opacity-90 disabled:opacity-85'>Create Listing</Link>
+        
         </form>
+        
 
         <div className=' flex justify-between mt-5'>
           <span className=' text-red-600 cursor-pointer' onClick={handleDeleteUser}>Delete Account</span>

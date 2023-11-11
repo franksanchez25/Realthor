@@ -8,6 +8,7 @@ import { About } from './pages/about'
 import { Header } from './components/Header'
 import { SignUp } from './pages/SignUp'
 import { Private } from './Routes/Private'
+import { CreateListing } from './pages/CreateListing'
 export const App = () => {
   return (
      <BrowserRouter>
@@ -21,9 +22,11 @@ export const App = () => {
           <Route path='/' element={<Home/>} />     
           <Route path='/sign-in' element={<SignIn/>} />     
           <Route path='/sign-up' element={<SignUp/>} />   
+          <Route path='/about' element={<About/>} />   
           
           <Route element={<Private/>}> 
             <Route path='/profile' element={<Profile/>} />     
+            <Route path='/create-listing' element={<CreateListing/>} />     
           </Route>  
           
           <Route path='/about' element={<About/>} />     
