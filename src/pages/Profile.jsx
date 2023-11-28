@@ -23,6 +23,7 @@ const dispatch = useDispatch();
    const  [formValues, handleInputChange] = useForm({});
 
  
+   console.log(loading)
 
   useEffect(() => {
     if (file) {
@@ -71,7 +72,7 @@ const handleSubmit = async (e)=> {
     }
 
 
-   await axiosClient.put(`api/user/update/${user?.currentUser.id}`,formValues).then((res)=>{
+   await axiosClient.put(`api/user/update/${user?.currentUser.user_id}`,formValues).then((res)=>{
       
       const {data} = res;
       
@@ -104,7 +105,7 @@ const handleDeleteUser = async (e) => {
   try {
     dispatch(startDeleteUser());
 
-    axiosClient.delete(`api/user/delete/${user?.currentUser.id}`,{withCredentials:true}).then( (res)=> {
+    axiosClient.delete(`api/user/delete/${user?.currentUser.user_id}`,{withCredentials:true}).then( (res)=> {
 
       const {data} = res;
 
@@ -211,10 +212,10 @@ const handleSignout = async (e) => {
           <span className=' text-red-600 cursor-pointer' onClick={handleDeleteUser}>Delete Account</span>
           <span className=' text-red-600 cursor-pointer' onClick={handleSignout}>Signout</span>
         </div>
-          <p>{ error && error.map(err => {
-                  return <p key={err?.msg} className=' text-red-600 mt-5'>{err?.msg}</p> })  }</p>
+          { error && error.map(err => {
+                  return <span key={err?.msg} className=' text-red-600 mt-5'>{err?.msg}</span> })  }
 
-          <p className='text-green-600 mt-2'>{updateSuccess ? 'User updated successfully...': ''}</p>
+          <span className='text-green-600 mt-2'>{updateSuccess ? 'User updated successfully...': ''}</span>
     </div>
   )
 }

@@ -90,13 +90,14 @@ const {loading, error} = user;
             <Link to={"/sign-up"}>
               <span className=' text-blue-600'>Sign Up</span>
             </Link>
-            {
-              <p>{
+            
+              {
+                
                error && error.map(err => {
-                  return <p key={err?.msg} className=' text-red-600'>{err?.msg}</p>
+                  return <span key={err} className=' text-red-600'>{err?.msg}</span>
                 })
-                }</p>
-            }
+                }
+            
           </div>
     </div>
   )
